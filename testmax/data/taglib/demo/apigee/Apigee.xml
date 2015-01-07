@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Add any global variable used across all test case with global element 
+	name same as your module name. you can pass any global element sqllib:<Module 
+	Name>.<element tag> Ex: sqllib:ProdOrderReport.t_edd_log_rec -->
+
+<taglib name="apigee">
+	<loginToApigee description="Use this tag to login to Apigee">
+		<tag url="@wwwserver" method="get" description="find login page"
+			timeout="5000" />
+		<tag description="Enter Login Name" name="username" havingTag="input"
+			timeout="500" method="sendKeys">@loginname</tag>
+		<tag description="Enter Password Name" name="password" havingTag="input"
+			timeout="500" method="sendKeys">@password</tag>
+		<tag description="Click Login button" id="signin" havingTag="input"
+			timeout="1000" method="click"></tag>
+	</loginToApigee>
+
+	<invokeDashboard description="Use this tag to invoke the dashboard of Apigee">
+		<injector id="taglib:apigee-injector.deleteAPI"></injector>
+		<injector id="taglib:apigee-injector.invokeAPI"></injector>
+	</invokeDashboard>
+
+	<javaInjectorExample
+		description="Use this tag to invoke the dashboard of Apigee with java injector">
+		<injector id="mypage.deleteAPI"></injector>
+		<injector id="mypage.getApiInfo"></injector>
+		<!-- Example how to make restricted any java injector which needs explicit 
+			call in your test case within <injectors> tag -->
+		<injector id="mypage.modifyApiInfo" restricted="yes"></injector>
+	</javaInjectorExample>
+
+</taglib>
+

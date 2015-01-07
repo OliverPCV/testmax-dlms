@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Injector is mainly an operation which will bring back the same page 
+	where from it started that operation. It is like a trigger and first user 
+	can override the default operation by customizing in their local configuration. 
+	If this operation is not mentioned in the configuration file these operation 
+	will not be invoked. User must customize these operation by using injectors 
+	tag in thier configuration file -->
+
+<taglib name="apigee-injector">
+
+	<invokeAPI description="Use this tag configure API">
+		<tag description="Click API link" id="tabAPIs" havingTag="a"
+			havingHref="/sjapi/apis" timeout="5000" method="click"></tag>
+		<tag description="Click Add API Button" id="addApiButton"
+			havingTag="span" timeout="1000" method="click"></tag>
+		<tag description="Enter API Name" id="api-name" havingTag="input"
+			timeout="1000" method="sendKeys">@apiname</tag>
+		<tag description="Enter Base Path" id="basePath" havingTag="input"
+			timeout="1000" method="sendKeys">@basepath</tag>
+		<tag description="Enter API Description" id="api-description"
+			havingTag="input" timeout="1000" method="sendKeys">@description</tag>
+		<tag description="Enter Endpoint" id="endpoint" havingTag="input"
+			timeout="1000" method="sendKeys">@endpoint</tag>
+		<tag description="Enter URL View" classname="resource-path"
+			havingName="url-view" havingTag="input" timeout="1000" method="sendKeys">@urlview</tag>
+		<tag description="Enter Name View" classname="display-name"
+			havingName="name-view" havingTag="input" timeout="1000" method="sendKeys">@nameview</tag>
+		<tag description="Enter View Description" classname="description"
+			havingTag="input" havingName="description" timeout="2000" method="sendKeys">@viewdesc</tag>
+		<tag description="Click Save Button" id="save-btn-add" havingTag="a"
+			timeout="5000" method="click"></tag>
+	</invokeAPI>
+
+
+	<deleteAPI description="Use this tag to delete existing API">
+		<tag description="Click API link" id="tabAPIs" havingTag="a"
+			havingHref="/sjapi/apis" timeout="5000" method="click"></tag>
+		<if name="verify if same API exists" description="verify if id=apiList">
+			<if-element description="validate if condition for id=apiList"
+				id="apiList" timeout="3000"></if-element>
+			<tag description="Click API Name=@apiname" classname="api-name"
+				havingTag="span" havingText="@apiname" timeout="3000" method="click"></tag>
+			<tag description="Click Delete Button" id="api-delete" havingTag="a"
+				type="button" timeout="5000" method="click"></tag>
+		</if>
+		<if name="verify if same API exists" description="verify if  classname=modal-footer">
+			<if-element description="validate if condition for classname=modal-footer"
+				id="modal-confirm" timeout="3000"></if-element>
+			<tag description="Click OK Button" id="modal-confirm" havingTag="a"
+				havingText="OK" type="button" timeout="5000" method="click"></tag>
+		</if>
+	</deleteAPI>
+
+
+
+
+</taglib>
+

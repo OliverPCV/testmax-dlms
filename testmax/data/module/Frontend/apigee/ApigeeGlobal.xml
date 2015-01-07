@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<page name="ApigeeGlobal" class="scm.wm.handler.ApiHandler">
+
+
+
+	<action name="TC1" apiname="" type="API" dbName="demodb"
+		setglobal="yes" fields="" description="Test Distributor=null">
+
+		<validator name="Step: Call Cassandra Database" description="Item Finder Assert Test">
+
+			<sql name="q1" dbname="demodb" globaldataset="yes">
+
+				select *from test
+
+			</sql>
+
+			<assert name="Verify whether testresult return is "
+				descriptor="VARCHAR" output="q1.viewdesc" lookuprow="*"
+				value="Weather forcast" operator="Has" />
+
+		</validator>
+
+
+	</action>
+
+	<action name="TC2- Without Delete" apiname="" type="API" dbName="demodb"
+		dataset="global:query.q1" fields="" description="Test Distributor=null">
+		<!-- although invokeDashboard has 2 injectors but we will invoke only 1 
+			injector in this example -->
+
+		<validator name="Step-1: Login To APIgee Dashboard"
+			description="">
+			<variables>
+				<var id="wwwserver" value="https://enterprise.apigee.com/login" />
+				<var id="loginname" value="Your Login" />
+				<var id="password" value="srijit96" />
+			</variables>
+			<junit name="Test scm.wm.runner">
+				<testPackage name="scm.wm.runner">
+					<testClass class="SeleniumTestRunner">
+
+						<taglib>
+							@taglib:apigee.loginToApigee
+							@taglib:apigee.invokeDashboard
+						</taglib>
+						<injectors>
+							<!-- although invokeDashboard has 2 injectors but we will invoke only 
+								1 injectors here -->
+							@taglib:apigee-injector.invokeAPI
+						</injectors>
+					</testClass>
+				</testPackage>
+			</junit>
+
+		</validator>
+
+
+	</action>
+
+	<action name="TC3-With Delete" apiname="" type="API" dbName="demodb"
+		dataset="global:query.q1" fields="" description="Test Distributor=null">
+		<!-- We are calling both injectors from invokeDashboard in this example -->
+
+		<validator name="Step-1: Login To APIgee Dashboard"
+			description="">
+			<variables>
+				<var id="wwwserver" value="https://enterprise.apigee.com/login" />
+				<var id="loginname" value="Your Login" />
+				<var id="password" value="srijit96" />
+			</variables>
+			<junit name="Test scm.wm.runner">
+				<testPackage name="scm.wm.runner">
+					<testClass class="SeleniumTestRunner">
+
+						<taglib>
+							@taglib:apigee.loginToApigee
+							@taglib:apigee.invokeDashboard
+						</taglib>
+						<injectors>
+							<!-- We are calling both injectors from invokeDashboard -->
+							@taglib:apigee-injector.deleteAPI
+							@taglib:apigee-injector.invokeAPI
+						</injectors>
+					</testClass>
+				</testPackage>
+			</junit>
+
+		</validator>
+
+
+	</action>
+
+	<action name="TC4:Java-Injector Not Restricted" apiname="" type="API"
+		dbName="demodb" dataset="global:query.q1" fields=""
+		description="Test Distributor=null">
+
+
+		<validator name="Step-1: Login To APIgee Dashboard"
+			description="">
+			<variables>
+				<var id="wwwserver" value="https://enterprise.apigee.com/login" />
+				<var id="loginname" value="Your Login" />
+				<var id="password" value="srijit96" />
+			</variables>
+			<junit name="Test scm.wm.runner">
+				<testPackage name="scm.wm.runner">
+					<testClass class="SeleniumTestRunner">
+
+						<taglib>
+							@taglib:apigee.loginToApigee
+							@taglib:apigee.javaInjectorExample
+						</taglib>
+						<injectors>
+							<!-- Java injectors are called automatically without putting in the 
+								injector list -->
+						</injectors>
+					</testClass>
+				</testPackage>
+			</junit>
+
+		</validator>
+
+
+	</action>
+
+	<action name="TC5:Java-Injector With Restricted" apiname=""
+		type="API" dbName="demodb" dataset="global:query.q1" fields=""
+		description="Test Distributor=null">
+
+		<!-- Example Java restricted injectors needs explicit call. Below 2 injectors 
+			won't need explicit call since these are not restricted in taglib <injector 
+			id="mypage.deleteAPI"></injector> <injector id="mypage.getApiInfo"></injector> 
+			Below injector needs explicit call since this is restricted in the taglib 
+			<injector id="mypage.modifyApiInfo" restricted="yes"></injector> -->
+		<validator name="Step-1: Login To APIgee Dashboard"
+			description="">
+			<variables>
+				<var id="wwwserver" value="https://enterprise.apigee.com/login" />
+				<var id="loginname" value="Your Login" />
+				<var id="password" value="Your Password" />
+			</variables>
+			<junit name="Test scm.wm.runner">
+				<testPackage name="scm.wm.runner">
+					<testClass class="SeleniumTestRunner">
+
+						<taglib>
+							@taglib:apigee.loginToApigee
+							@taglib:apigee.javaInjectorExample
+						</taglib>
+						<injectors>
+							<!-- Java restricted injectors needs explicit call -->
+							@mypage.modifyApiInfo
+						</injectors>
+					</testClass>
+				</testPackage>
+			</junit>
+
+		</validator>
+
+
+	</action>
+</page>
+
+
+

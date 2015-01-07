@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Injector is mainly an operation which will bring back the same page 
+	where from it started that operation. It is like a trigger and first user 
+	can override the default operation by customizing in their local configuration. 
+	If this operation is not mentioned in the configuration file these operation 
+	will not be invoked. User must customize these operation by using injectors 
+	tag in thier configuration file -->
+
+<taglib name="evaluation-injector">
+
+
+
+	<addNewReviewForm description="Use this tag to create a review form"
+		parameters="@template_title,@template_desc">
+		<!-- INPUT: @template_title : provide review template name @template_desc 
+			: provide review template description OUPUT: @review_template_msg : returns 
+			confirmation message after saving template -->
+		<tag description="Click Administration Tab" id="navWrap"
+			havingTag="a" havingHref="/Page/Administration" timeout="3000"
+			method="click"></tag>
+		<tag description="Click Evaluation Template Link" classname="admin"
+			havingTag="img" havingImage="_evalform.gif" timeout="3000" method="click"></tag>
+		<tag description="Click Add New for Review" tagname="a"
+			havingAttribute="href:reviewFormTemplateId" timeout="3000"
+			method="executeOperation"></tag>
+		<tag description="Enter Template Title" id="templateTitle"
+			timeout="3000" method="sendKeys">Review @template_title</tag>
+		<tag description="Check General Review" id="generalReview"
+			timeout="3000" method="click"></tag>
+		<tag description="Check Show Comment" id="showComment" timeout="3000"
+			method="click"></tag>
+		<tag description="Enter Template Description" id="templateDesc"
+			timeout="3000" method="sendKeys">@template_desc</tag>
+		<!-- <tag description="Click Add New Criteria" tagname="span" havingAttribute="text:Add 
+			New Criterion" timeout="3000" method="executeOperation"></tag> -->
+		<tag description="Enter Criteria" id="label-f0" timeout="3000"
+			method="sendKeys">Review Comments @random</tag>
+		<tag description="Click Save Button" tagname="span"
+			havingAttribute="text:Save" timeout="3000" method="executeOperation"></tag>
+		<tag description="Verify update message" classname="success"
+			timeout="3000" method="asserttext">@review_template_msg</tag>
+
+	</addNewReviewForm>
+
+	<addNewEvaluationForm description="Use this tag to create a evaluation form"
+		parameters="@template_title,@template_desc">
+		<!-- INPUT: @template_title : provide review template name @template_desc 
+			: provide review template description OUPUT: @review_template_msg : returns 
+			confirmation message after saving template -->
+		<tag description="Click Administration Tab" id="navWrap"
+			havingTag="a" havingHref="/Page/Administration" timeout="3000"
+			method="click"></tag>
+		<tag description="Click Evaluation Template Link" classname="admin"
+			havingTag="img" havingImage="_evalform.gif" timeout="3000" method="click"></tag>
+		<tag description="Click Add New button for Evaluation" tagname="a"
+			havingAttribute="href:EvaluationForm" timeout="3000" method="executeOperation"></tag>
+		<tag description="Enter Template Title" id="templateTitle"
+			timeout="3000" method="sendKeys">Evaluation @template_title</tag>
+		<tag description="Enter Template Description" id="templateDesc"
+			timeout="3000" method="sendKeys">@template_desc</tag>
+		<tag description="Enter Criteria" id="label-f0" timeout="3000"
+			method="sendKeys">Calculate Risk Factor @random</tag>
+		<tag description="Click Save Button" tagname="span"
+			havingAttribute="text:Save" timeout="3000" method="executeOperation"></tag>
+		<tag description="Verify update message" classname="success"
+			timeout="3000" method="asserttext">@evaluation_form_msg</tag>
+
+	</addNewEvaluationForm>
+
+	<addNewEvaluationFile description="Use this tag to create a evaluation file"
+		parameters="@template_title,@evaluation_filepath">
+		<!-- INPUT: @template_title : provide review template name @evaluation_filepath 
+			: path of the file used for evaluation OUPUT: @review_template_msg : returns 
+			confirmation message after saving template -->
+		<tag description="Click Administration Tab" id="navWrap"
+			havingTag="a" havingHref="/Page/Administration" timeout="3000"
+			method="click"></tag>
+		<tag description="Click Evaluation Template Link" classname="admin"
+			havingTag="img" havingImage="_evalform.gif" timeout="3000" method="click"></tag>
+		<tag description="Click Add New button for Evaluation" tagname="a"
+			havingAttribute="href:EvaluationFile" timeout="3000" method="executeOperation"></tag>
+		<tag description="Enter Tevaluation file name" name="title"
+			timeout="3000" method="sendKeys">File @template_title</tag>
+		<tag description="Enter File Name" id="fileNameId" timeout="3000"
+			method="sendKeys">@evaluation_filepath</tag>
+		<tag description="Click Save Button" tagname="span"
+			havingAttribute="text:Submit" timeout="3000" method="executeOperation"></tag>
+
+	</addNewEvaluationFile>
+
+</taglib>
+

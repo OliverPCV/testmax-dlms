@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<page name="GithubTest" description="This is a demo page to test Github blog">
+    
+	
+	<action name="Demo1" description="Test Github blog">
+
+	   
+
+		<validator name="Step-1: Click different links in the blog"
+			description="">
+			 <variables>
+				<var id="link1" value="My New Features" />
+				<var id="verifylink2" value="Engineering" /> 
+				<var id="verifylink3" value="Enterprise" /> 
+			</variables>
+			<junit name="Test com.testmax.runner">
+				<testPackage name="com.testmax.runner">
+					<testClass class="SeleniumTestRunner">
+						<variables>
+							<var id="link1" value="New Features" /> <!-- link1 is overiding with local value -->
+							<var id="link2" value="Engineering" /> 
+							<var id="link3" value="Enterprise" />
+						</variables>
+						<taglib>
+						    <!-- under find this XML method under taglib/demo/Github.xml. To learn more about how to use injector please look at FAQ -->
+							@taglib:gitHub.searchBlog
+
+						</taglib>
+						<injectors>
+                           <!-- 
+                             No Injectors are defined in this example. To learn about injector look at apigee/apigee.xml and also pdf FAQ
+                            -->
+						</injectors>
+					</testClass>
+				</testPackage>
+			</junit>
+			
+            <assert name="Verify @link1 title" descriptor="VARCHAR" output="junit:title1" value="New Features" operator="Has" /> <!--passing hard coded value -->
+            <assert name="Verify @link2 title" descriptor="VARCHAR" output="junit:title2" value="@verifylink2" operator="Has" /> <!--passing value using variables-->
+            <assert name="Verify @link3 title" descriptor="VARCHAR" output="junit:title3" value="@verifylink3" operator="Has" />
+		</validator>
+
+
+	</action>
+</page>

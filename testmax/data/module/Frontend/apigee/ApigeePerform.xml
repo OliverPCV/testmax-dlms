@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- if you use GET/POST or both and use URL HTTP or HTTPS then You must 
+	implement HTTP or HTTPS with related methods POST Or GET in bert.wm.uri.SignInPage 
+	java class -->
+
+<page name="ApigeePerformance" class="scm.wm.handler.ApiHandler">
+
+
+	<action name="TC1" type="WEBSERVICE" method="POST">
+		<url>http://sjapi-test.apigee.net/v3/weather/forecastrss?w=12797282</url>
+		<param name="w">12797283</param>
+
+	</action>
+
+
+</page>
+

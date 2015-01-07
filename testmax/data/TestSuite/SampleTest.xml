@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You must set Page= <Module File Name> without .xml file extension Ex: 
+	page="TestProc" You can run your test in 4 different modes. 1) Performance 
+	Test for Individual Test Case - set action= performance@<TestCase action 
+	Name defined in Module File> Ex: action="performance@TC1.0" 2) Entire Test 
+	suite - set action=performance (Case insensitive) Ex: action=performance 
+	3) Unit Testing Entire Suite - set action=UNIT (Case insensitive) Ex: action=unit 
+	4) Unit Testing Individual Test - set action=UNIT@<action Name> (Case insensitive) 
+	Ex: action="unit@TC1.0" For browser testing use can use these 2 additional 
+	attributes to override baseUrl and browsers which is in your config.properties. 
+	Do not use these below 2 attributes which are not browser based test. browsers="firefox" 
+	baseurl="http://mydomain.com" you can override your QA_TEST_ENV parameter 
+	usinf env attribute -->
+
+<testdata>
+
+	<!-- Run this datasetup script only once before running any test. Comment 
+		this section once your test data is created -->
+	<Test name="GithubTest" 
+	    page="GithubTest" 
+	    env="demo" 
+	    browsers="chrome"
+		baseurl="https://github.com" 
+		action="unit" 
+		overrideattributes=""
+		threads="1" 
+		timeout="60" />
+
+</testdata>
+
+
