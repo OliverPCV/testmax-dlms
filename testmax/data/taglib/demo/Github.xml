@@ -10,6 +10,7 @@
 		<tag description="Click link=@link1" tagname="a" havingAttribute="href:/blog" ></tag>
 		<tag description="Click link=@link1" tagname="a" havingAttribute="text:@link1" ></tag>
 		<tag description="Extract page header to assert value for link=@link1" tagname="a" havingAttribute="class:blog-title" timeout="3000" operation="read"  >@title1</tag>
+		
 		<tag description="Click link=@link2" tagname="a" havingAttribute="text:@link2" ></tag>
 		
 		<!--  Use timeout attribute if you need to override default timeout = 500 mili sec -->
@@ -21,10 +22,10 @@
 		     
 		   
 		 -->
-		<tag description="Extract page header to assert value for link=@link2" tagname="a" havingAttribute="class:blog-title" timeout="3000" operation="read" method="executeOperation">@title2</tag>
+		<tag description="Extract page header to assert value for link=@link2" tagname="a" havingAttribute="class:blog-title" timeout="3000" operation="read" >@title2</tag>
 		<tag description="Click link=Enterprise" tagname="a" havingAttribute="href:/blog/category/enterprise" timeout="1000" method="executeOperation"></tag>
-		<tag description="Extract page header to assert value for link=Enterprise" tagname="a" havingAttribute="class:blog-title" timeout="3000" operation="read" method="executeOperation">@title3</tag>
-	
+		<tag description="Extract page header to assert value for link=Enterprise" tagname="a" havingAttribute="class:blog-title" timeout="3000" operation="read" >@title3</tag>
+		
 	</searchBlog>
 
 

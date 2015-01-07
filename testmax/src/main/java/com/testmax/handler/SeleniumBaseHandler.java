@@ -1253,6 +1253,7 @@ public abstract class SeleniumBaseHandler extends TestCase{
 		printMessage(curTag.asXML());
 		PrintTime timer= new PrintTime();
 		this.controlIdentifier="";
+		
 		this.targetTag=curTag;
 		if(timeout!=null &&!timeout.isEmpty() 
 				&&this.configTag!=null &&this.configTag.equalsIgnoreCase("tag")
@@ -2329,7 +2330,10 @@ public abstract class SeleniumBaseHandler extends TestCase{
 							this.printCommand(this.tagdesc +" for control with identifier="+this.controlIdentifier + "\n Script="+addMessage());
 							printMessage("**** Executed Java Script= "+addMessage()+ " for Control="+this.controlIdentifier +":"+ addMessage());		
 							return true;		
-					 }else if(this.operation.equalsIgnoreCase("read")){
+					 }else if(this.operation.equalsIgnoreCase("read") ){
+						 
+						 if(this.readElement()) return true;
+						 
 						 this.waitToPageLoad(new Integer(timeout));
 						 String trackvalId="executeOperation_trackval_id";
 						 String inIf=!innerif.isEmpty()? "\t\t\tif("+innerif+"){\n":"";
@@ -2371,7 +2375,7 @@ public abstract class SeleniumBaseHandler extends TestCase{
 						 */
 						 WebElement read=null;
 						 try{
-							 read=this.getDriver().findElement(By.id(trackvalId));
+							 read=this.driver.findElement(By.id(trackvalId));
 							
 						 }catch(NoSuchElementException e){
 							 if(read==null && this.v_driver.equalsIgnoreCase("ie") &&ieclass.equalsIgnoreCase("class")){
@@ -2397,11 +2401,11 @@ public abstract class SeleniumBaseHandler extends TestCase{
 						 //finally remove id
 						 String resetId=null;
 						 try{   
-							 //if(read!=null){
+							 if(read!=null){
 							     	resetId="document.getElementById('"+trackvalId+"').setAttribute('id',' ');";
 							 	
 							     	((JavascriptExecutor) this.getDriver()).executeScript(resetId);
-							 //}
+							 }
 					    		
 						 }catch(WebDriverException e){
 			    			printMessage("**** Executed Java Script With EXCEPTION to reset id="+trackvalId+ " "+timer.getPrintTime()+" "+e.getMessage()+" Script="+resetId);
@@ -2471,6 +2475,62 @@ public abstract class SeleniumBaseHandler extends TestCase{
 	    return false;
 	 }
 	
+	protected boolean readElement(){
+		String actual=null;
+		By by=null;
+		WebElement control=null;
+		
+			if(this.havingAttribute.contains("id:") &&this.havingAttribute.split(":").length>1){
+				
+				by=By.id(this.havingAttribute.split(":")[1]);
+				
+			}else if(this.havingAttribute.contains("name:")){
+				
+				by=By.name(this.havingAttribute.split(":")[1]);
+				
+			}else if(this.havingAttribute.contains("class:")){
+			
+				by=By.className(this.havingAttribute.split(":")[1]);
+				 
+			 }
+		try{
+			if(by!=null){
+				this.waitForElement(this.driver.findElement(by), null);
+				control=this.driver.findElement(by);
+				this.setImpilicitTimeInMiliSec(new Integer(timeout));							
+				Thread.sleep(100);
+			    actual=control.getText();
+				if(this.isEmptyValue(actual)){
+					actual=control.getAttribute("value");
+					printMessage("**** Control won't have Text Value. Extracted Value using attribute Name=value. Found value= "+actual+" for "+this.controlIdentifier +":"+ addMessage());
+				}
+				
+				this.printCommand(this.tagdesc +" for control with identifier="+this.controlIdentifier + " value="+addMessage() +", actual="+actual);
+				printMessage("**** verifying Text Value= "+actual+" for "+this.controlIdentifier +":"+ addMessage());
+				if(!this.isEmptyValue(actual)){
+					if(value!=null &&value.contains("@")){
+						this.addTestExtract(value, actual);
+					}else{
+						this.assertText(value, actual);
+					}
+				}
+				return true;
+			}
+			
+		}catch(Exception e){
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			//e.printStackTrace();
+			return false;
+		}
+		
+		return false;
+		
+	}
 	protected String getOperation(){
 		String op="";
 		if(this.operation==null||this.operation.isEmpty()){
