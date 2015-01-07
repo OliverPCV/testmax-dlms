@@ -15,3 +15,10 @@ If you want to work as a consultant for implementing TestMax solution, please fi
 ## Change Note ##
 
 For any upcoming changes please mention in the change note
+
+## Upcoming Releases ##
+
+1) Integration with Cucumber
+2) Jira & Trello Plugins
+3) Mobile Appium Integration
+4) Testgen Repository ..
