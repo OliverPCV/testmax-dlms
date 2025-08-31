@@ -79,16 +79,4 @@ mvn -version
 - **Logs:** show that the mock values (`frame`, `OBIS`, `value`, `unit`) are set and validated.  
 - **Graphs:** execution, response time, elapsed time, and active users are automatically generated.
 
-(Screenshots can be added here if needed.)
 
----
-
-## 🔜 Next steps
-- Replace mock values with **real DLMS protocol data**.  
-- Extend XML with real device interaction.  
-- Use TestMAX mocking to simulate responses where hardware is not yet available.  
-
----
-
-## 👤 Maintainers
-Prepared by Oliver & team as first proof-of-concept for DLMS testing with TestMAX.
