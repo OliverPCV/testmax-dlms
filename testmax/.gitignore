@@ -1,0 +1,9 @@
+/target/
+/output/
+**/*.log
+/chromedriver.log
+/.idea/
+/.vscode/
+/.settings/
+/.classpath
+/.project
