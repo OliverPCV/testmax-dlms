@@ -1,0 +1,11 @@
+<page name="Hello" class="com.testmax.handler.ApiHandler">
+  <action name="HelloAction" type="API" description="Minimal mock action – run a trivial JUnit test">
+    <validator name="Step-1: Run JUnit" description="Execute a simple passing test">
+      <junit name="Test com.testmax.samples.custom">
+        <testPackage name="com.testmax.samples.custom">
+          <testClass name="AlwaysPass"/>
+        </testPackage>
+      </junit>
+    </validator>
+  </action>
+</page>

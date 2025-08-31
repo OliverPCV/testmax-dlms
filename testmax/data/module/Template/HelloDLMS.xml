@@ -1,0 +1,32 @@
+<page name="HelloDLMS" class="com.testmax.handler.ApiHandler">
+  <!-- Jednoduchý mock DLMS: bez sítě a bez DB -->
+  <action name="MockFrame" type="API" description="Mock DLMS frame + simple assertions">
+    
+    <!-- KROK 1: “Nastavení” mock hodnot (uloží do interních proměnných) -->
+    <validator name="Step-1: Set mock variables" description="No external dependencies">
+      <!-- Předstíraný DLMS rámec (hex jen ilustrační) -->
+      <assert name="Set frame" descriptor="VARCHAR" value="C0017E1009000102AABBCCDD" operator="Set"/>
+      <!-- Předstírané rozparsované hodnoty -->
+      <assert name="Set obis"  descriptor="VARCHAR" value="1-0:1.8.0" operator="Set"/>
+      <assert name="Set val"   descriptor="VARCHAR" value="12345"     operator="Set"/>
+      <assert name="Set unit"  descriptor="VARCHAR" value="Wh"        operator="Set"/>
+    </validator>
+
+    <!-- KROK 2: Ověření mock hodnot -->
+    <validator name="Step-2: Validate fields" description="Pure XML asserts">
+      <assert name="OBIS present"  descriptor="VARCHAR" value="1-0:1.8.0" operator="Has"/>
+      <assert name="Value present" descriptor="VARCHAR" value="12345"     operator="Has"/>
+      <assert name="Unit present"  descriptor="VARCHAR" value="Wh"        operator="Has"/>
+    </validator>
+
+    <!-- KROK 3: Lehký JUnit smoke (použijeme AlwaysPass, co už máš) -->
+    <validator name="Step-3: Tiny JUnit smoke" description="Always pass">
+      <junit name="Test com.testmax.samples.custom">
+        <testPackage name="com.testmax.samples.custom">
+          <testClass name="AlwaysPass"/>
+        </testPackage>
+      </junit>
+    </validator>
+
+  </action>
+</page>
